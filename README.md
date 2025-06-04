@@ -1,59 +1,168 @@
-# EncryptorApp
+# Encryptor App - Guía de Instalación y Configuración
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.14.
+Este proyecto contiene dos servicios que debes levantar por separado:
+- **Backend de cifrado/descifrado** (Node.js)
+- **Frontend Angular** (interfaz que consume el backend)
 
-## Development server
+## 📋 Requisitos Previos
 
-To start a local development server, run:
+Antes de comenzar, asegúrate de tener instalados en tu sistema:
 
-```bash
-ng serve
-```
+- **Node.js** (v14+ recomendado) y **npm** (v6+)
+- **Angular CLI** (para compilar y levantar el frontend)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Si aún no tienes Angular CLI, instálala globalmente:
 
 ```bash
-ng generate component component-name
+npm install -g @angular/cli
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🚀 Instalación
+
+### 1. Clonar el repositorio
 
 ```bash
-ng generate --help
+git clone https://github.com/BrandonHastur/encryptor-app.git
+cd encryptor-app
 ```
 
-## Building
+### 2. Instalar dependencias
 
-To build the project run:
+#### 2.1. Backend (Node.js)
+Instala las dependencias del backend ejecutando en la raíz del proyecto:
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Esto instalará paquetes como `express`, `cors`, `body-parser`, etc.
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+#### 2.2. Frontend (Angular)
+Las dependencias de Angular se instalan con el mismo comando anterior. Si necesitas reinstalar específicamente las dependencias de Angular, ejecuta nuevamente:
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
+Verifica que existe la carpeta `node_modules/@angular/` para confirmar que Angular está correctamente instalado.
 
-For end-to-end (e2e) testing, run:
+## 🔧 Configuración y Ejecución
+
+### 3. Levantar el Backend
+
+En la carpeta raíz del proyecto, ejecuta:
 
 ```bash
-ng e2e
+node index.js
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+El servidor se levantará en `http://localhost:3000` y verás mensajes como:
 
-## Additional Resources
+```
+🔒 encryption-service escuchando en http://localhost:3000
+🔑 Llave pública guardada en /keys/public_key.pem
+🔑 Llave privada guardada en /keys/private_key.pem
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+#### Verificar el Backend
+
+Puedes probar los endpoints con Postman o tu navegador:
+
+**Cifrar mensaje:**
+```http
+POST http://localhost:3000/api/encrypt
+Content-Type: application/json
+
+{
+  "text": "Hola Mundo"
+}
+```
+
+**Respuesta esperada:**
+```json
+{
+  "encrypted": "rZ9U3H04a…=="
+}
+```
+
+**Descifrar mensaje:**
+```http
+POST http://localhost:3000/api/decrypt
+Content-Type: application/json
+
+{
+  "encrypted": "rZ9U3H04a…=="
+}
+```
+
+**Respuesta esperada:**
+```json
+{
+  "decrypted": "Hola Mundo"
+}
+```
+
+### 4. Levantar el Frontend
+
+**Importante:** Mantén el backend corriendo y abre una nueva terminal.
+
+En la carpeta raíz del proyecto, ejecuta:
+
+```bash
+ng serve --open
+```
+
+Esto:
+- Compilará el proyecto Angular
+- Levantará un servidor de desarrollo en `http://localhost:4200`
+- Abrirá automáticamente tu navegador (opción `--open`)
+
+## 🎯 Uso de la Aplicación
+
+Con ambos servicios ejecutándose:
+
+1. **Accede a la interfaz:** `http://localhost:4200`
+2. **Escribe tu mensaje** en el campo de texto (o utiliza el micrófono para dictado por voz)
+3. **Cifrar:** Haz clic en "Cifrar" → verás el resultado en Base64
+4. **Descifrar:** Haz clic en "Descifrar" → la app mostrará el texto original
+
+## 📝 Resumen de Comandos
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/BrandonHastur/encryptor-app.git
+cd encryptor-app
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Levantar el backend (mantener esta terminal abierta)
+node index.js
+
+# 4. En otra terminal: Levantar el frontend
+ng serve --open
+```
+
+## 🌐 URLs de los Servicios
+
+- **Backend:** `http://localhost:3000`
+- **Frontend:** `http://localhost:4200`
+
+## 🔧 Estructura del Proyecto
+
+```
+encryptor-app/
+├── index.js                    # Servidor backend
+├── package.json               # Dependencias del proyecto
+├── encryption.service.ts      # Servicio Angular
+├── angular.json              # Configuración Angular
+├── src/                      # Código fuente Angular
+├── keys/                     # Llaves de cifrado (generadas automáticamente)
+└── node_modules/            # Dependencias instaladas
+```
+
+## ❗ Solución de Problemas
+
+- **Error con `ng serve`:** Verifica que estés en la carpeta correcta y que exista el archivo `angular.json`
+- **Backend no responde:** Asegúrate de que el puerto 3000 no esté ocupado por otro proceso
+- **Frontend no conecta:** Verifica que el backend esté corriendo en `http://localhost:3000`
