@@ -1,0 +1,39 @@
+<div class="encryptor-container">
+  <h2>🔒 Cifrar / Descifrar Mensaje</h2>
+
+  <!-- Campo de texto para ingresar el mensaje o que se llene por voz -->
+  <div class="input-group">
+    <input
+      type="text"
+      [(ngModel)]="mensaje"
+      placeholder="Escribe o dicta tu mensaje aquí"
+      class="text-input"
+    />
+
+    <!-- Boton de micrófono -->
+    <button type="button" class="mic-button" (click)="startVoiceRecognition()">
+      🎤
+    </button>
+  </div>
+
+  <!-- Botones para Cifrar y Descifrar -->
+  <div class="buttons-group">
+    <button type="button" class="action-button" (click)="onEncrypt()">
+      Cifrar
+    </button>
+    <button type="button" class="action-button" (click)="onDecrypt()">
+      Descifrar
+    </button>
+  </div>
+
+  <!-- Area para mostrar el resultado -->
+  <div class="result-group">
+    <label>Resultado:</label>
+    <textarea
+      readonly
+      [value]="resultado"
+      class="result-textarea"
+      placeholder="Aquí aparecerá el texto cifrado/descifrado"
+    ></textarea>
+  </div>
+</div>
