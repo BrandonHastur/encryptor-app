@@ -33,6 +33,7 @@ if (!fs.existsSync(keysDir)) {
 fs.writeFileSync(path.join(keysDir, 'private_key.pem'), privateKey);
 fs.writeFileSync(path.join(keysDir, 'public_key.pem'), publicKey);
 
+//ENDPOINT
 app.post('/api/encrypt', (req, res) => {
   const { text } = req.body;
   if (typeof text !== 'string') {

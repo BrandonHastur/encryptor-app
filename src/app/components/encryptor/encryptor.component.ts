@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './encryptor.component.html',
   styleUrls: ['./encryptor.component.css']
 })
+
 export class EncryptorComponent implements OnInit {
 
   // Para enlazar con el input de la vista
